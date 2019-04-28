@@ -9,6 +9,7 @@
     "dist": "npm run build && node scripts/post-build.js"
   },
   "dependencies": {
+    "@mdi/font": "^2.6.95",
     "apollo-cache-inmemory": "^1.5.1",
     "apollo-client": "^2.5.1",
     "apollo-link": "^1.2.11",
@@ -18,11 +19,13 @@
     "graphql": "^14.2.1",
     "graphql-tag": "^2.10.1",
     "register-service-worker": "^1.6.2",
+    "roboto-fontface": "*",
     "vue": "^2.6.10",
     "vue-apollo": "^3.0.0-beta.28",
     "vue-class-component": "^7.0.2",
     "vue-property-decorator": "^8.1.0",
-    "vue-router": "^3.0.3"
+    "vue-router": "^3.0.3",
+    "vuetify": "^1.5.5"
   },
   "devDependencies": {
     "@types/auth0-js": "^9.10.1",
@@ -33,7 +36,11 @@
     "@vue/cli-service": "^3.6.0",
     "node-sass": "^4.9.0",
     "sass-loader": "^7.1.0",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.1",
     "typescript": "^3.4.3",
-    "vue-template-compiler": "^2.5.21"
+    "vue-cli-plugin-vuetify": "^0.5.0",
+    "vue-template-compiler": "^2.5.21",
+    "vuetify-loader": "^1.0.5"
   }
 }

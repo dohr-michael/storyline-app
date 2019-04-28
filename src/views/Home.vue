@@ -14,12 +14,8 @@
     export default class Home extends Vue {
         token: string | null = '';
 
-        mounted() {
-            this.token = this.$auth.token;
-        }
+        mounted() { this.token = this.$auth.token; }
 
-        logout() {
-            this.$auth.logout();
-        }
+        logout() { this.$auth.logout(); }
     }
 </script>
