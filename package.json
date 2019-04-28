@@ -1,0 +1,39 @@
+{
+  "name": "storyline-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "dist": "npm run build && node scripts/post-build.js"
+  },
+  "dependencies": {
+    "apollo-cache-inmemory": "^1.5.1",
+    "apollo-client": "^2.5.1",
+    "apollo-link": "^1.2.11",
+    "apollo-link-http": "^1.5.14",
+    "auth0-js": "^9.10.1",
+    "core-js": "^2.6.5",
+    "graphql": "^14.2.1",
+    "graphql-tag": "^2.10.1",
+    "register-service-worker": "^1.6.2",
+    "vue": "^2.6.10",
+    "vue-apollo": "^3.0.0-beta.28",
+    "vue-class-component": "^7.0.2",
+    "vue-property-decorator": "^8.1.0",
+    "vue-router": "^3.0.3"
+  },
+  "devDependencies": {
+    "@types/auth0-js": "^9.10.1",
+    "@types/graphql": "^14.2.0",
+    "@vue/cli-plugin-babel": "^3.6.0",
+    "@vue/cli-plugin-pwa": "^3.6.0",
+    "@vue/cli-plugin-typescript": "^3.6.0",
+    "@vue/cli-service": "^3.6.0",
+    "node-sass": "^4.9.0",
+    "sass-loader": "^7.1.0",
+    "typescript": "^3.4.3",
+    "vue-template-compiler": "^2.5.21"
+  }
+}
