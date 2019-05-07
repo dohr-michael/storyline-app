@@ -1,40 +1,70 @@
-import Vue    from 'vue';
-import Router from 'vue-router';
-import Home   from './views/Home.vue';
-import Login  from './views/Login.vue';
+import Vue                 from 'vue';
+import Router, { Route }   from 'vue-router';
+import Login               from '@/app/views/Login.vue';
+import Main                from '@/app/views/Main.vue';
+import * as home           from '@/app/views/home';
+import * as universes      from '@/app/views/universes';
+import * as createUniverse from '@/app/views/create-universe';
+import * as utils          from '@/utils';
 
 Vue.use(Router);
 
-const router = new Router({
+const asyncRouter = (): Router => router;
+const router: Router = new Router({
     mode: 'history',
     base: process.env.BASE_URL,
     routes: [
         {
-            path: '/',
-            name: 'home',
-            component: Home,
-        },
-        {
-            path: '/about',
-            name: 'about',
-            // route level code-splitting
-            // this generates a separate chunk (about.[hash].js) for this route
-            // which is lazy-loaded when the route is visited.
-            component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
-        },
-        {
             path: '/login',
             name: 'login',
             component: Login,
-
-        }
+            meta: {
+                skipAuth: true,
+            }
+        },
+        {
+            path: '/',
+            name: 'main',
+            component: Main,
+            redirect: {name: 'home'},
+            children: [
+                {
+                    path: 'home',
+                    name: 'home',
+                    components: home,
+                },
+                {
+                    path: 'universes',
+                    name: 'universes',
+                    components: universes,
+                    props: {
+                        Main: utils.router
+                            .pagedRoute()
+                            .withNewRouteName('new-universe')
+                            .build(asyncRouter),
+                        Toolbar: utils.router
+                            .queryRoute()
+                            .build(asyncRouter),
+                    },
+                    children: [
+                        {
+                            path: 'new',
+                            name: 'new-universe',
+                            component: createUniverse.Modal,
+                            props: {
+                                listRouteName: 'universes',
+                            }
+                        }
+                    ]
+                },
+            ],
+        },
     ],
 });
 
 // "setup" of a global guard
 router.beforeEach((to, from, next) => {
-    console.log('router:', to.name, from.name);
-    if (to.name == 'login') { // check if "to"-route is "callback" and allow access
+    if (to.meta && to.meta.skipAuth === true) { // check if "to"-route is "callback" and allow access
         next();
     } else if (router.app.$auth.isAuthenticated()) { // if authenticated allow access
         next();

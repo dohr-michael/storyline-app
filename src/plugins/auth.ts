@@ -1,8 +1,8 @@
-import Vue         from 'vue';
-import { WebAuth } from 'auth0-js';
-import Component   from 'vue-class-component';
-import { Route }   from 'vue-router';
-import config      from '@/environment';
+import Vue           from 'vue';
+import { WebAuth }   from 'auth0-js';
+import { Component } from 'vue-property-decorator';
+import { Route }     from 'vue-router';
+import config        from '../environment';
 
 const webAuth = new WebAuth({
     ...config.auth0,
@@ -21,7 +21,15 @@ function readFromStorage(key: string): string | null {
     return sessionStorage.getItem(`auth.${key}`);
 }
 
-export interface UserProfile {}
+export interface UserProfile {
+    name: string | null;
+    picture: string | null;
+}
+
+export function bearerToken(): string | null {
+    const token = readFromStorage('id_token');
+    return token ? 'Bearer ' + token : null;
+}
 
 @Component({})
 export class Auth extends Vue {
@@ -125,10 +133,10 @@ export class Auth extends Vue {
             webAuth.parseHash((err, authResult) => {
                 if (authResult && authResult.idToken) {
                     this.expiredAt = authResult.expiresIn || 0;
-                    this.token = authResult.idToken;
                     this.accessToken = authResult.accessToken || null;
                     this.profile = authResult.idTokenPayload;
                     this.state = authResult.state ? JSON.parse(atob(authResult.state)) : null;
+                    this.token = authResult.idToken;
                     resolve();
 
                 } else if (err) {
@@ -141,8 +149,10 @@ export class Auth extends Vue {
     }
 }
 
-export default {
+const plugin = {
     install: function (cVue: typeof Vue, options?: any) {
         cVue.prototype.$auth = new Auth();
     }
 };
+
+Vue.use(plugin);

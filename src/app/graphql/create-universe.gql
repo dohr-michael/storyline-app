@@ -1,0 +1,12 @@
+#import "./fragments/universe.gql"
+
+mutation CreateUniverse($name: String!, $description: String!, $picture: String, $tags: [String!]!) {
+    createUniverse(input: {
+        name: $name,
+        description: $description,
+        picture: $picture,
+        tags: $tags
+    }) {
+        ...universe
+    }
+}

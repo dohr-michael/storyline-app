@@ -1,0 +1,10 @@
+#import "./universe.gql"
+
+fragment universesPaged on UniversesPaged {
+    limit
+    offset
+    total
+    items {
+        ...universe
+    }
+}

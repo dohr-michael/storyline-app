@@ -1,4 +1,4 @@
-import { Auth } from './auth';
+import { Auth } from './plugins/auth';
 
 declare module 'vue/types/vue' {
 

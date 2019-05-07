@@ -1,0 +1,11 @@
+#import "./user.gql"
+
+fragment universe on Universe {
+    id
+    name
+    description
+    picture
+    owner {
+        ...user
+    }
+}

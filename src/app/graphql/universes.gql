@@ -1,0 +1,7 @@
+#import "./fragments/universes-paged.gql"
+
+query Universes($query: String, $limit: Int, $offset: Int) {
+    universes(query: $query, limit: $limit, offset: $offset) {
+        ...universesPaged
+    }
+}
