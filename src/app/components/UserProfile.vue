@@ -32,6 +32,7 @@
 <script lang="ts">
     import Vue                        from 'vue';
     import { Component, Prop, Watch } from 'vue-property-decorator';
+    import { UserProfile as UP }      from '@/plugins/auth';
 
     @Component<UserProfile>({
         name: 'UserProfile',
@@ -46,7 +47,7 @@
         } = {};
 
         @Watch('$auth.profile', {deep: true})
-        onProfileChange(profile) {
+        onProfileChange(profile: UP | null) {
             let initial = '';
             if (profile && profile.name) {
                 initial = profile.name.split(' ').slice(0, 2).map(s => s.slice(0, 1)).join('');

@@ -55,10 +55,10 @@
         currentPage!: number;
         @Prop({required: true, type: Function})
         changePage!: (nextPage: number) => void;
-        @Prop({type: [String, null], default: null})
-        newRouteName!: string | null;
-        @Prop({type: [String, null], default: null})
-        detailsRouteName!: string | null;
+        @Prop({type: String})
+        newRouteName?: string;
+        @Prop({type: String})
+        detailsRouteName?: string;
 
         loading: number = 0;
         universes?: UniversesPaged;
@@ -67,7 +67,7 @@
 
         get totalPages(): number { return this.universes ? Math.ceil(this.universes.total / Step) : 0; }
 
-        onPageChange(next) {
+        onPageChange(next: number) {
             if (next !== this.currentPage) {
                 this.changePage(next);
             }

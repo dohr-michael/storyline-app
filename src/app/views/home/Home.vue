@@ -9,6 +9,6 @@
 
     const Step = 6;
 
-    @Component<Home>()
+    @Component<Home>({})
     export default class Home extends Vue {}
 </script>

@@ -7,7 +7,7 @@
     import Vue                 from 'vue';
     import { Component, Prop } from 'vue-property-decorator';
 
-    @Component<HomeToolbar>()
+    @Component<HomeToolbar>({})
     export default class HomeToolbar extends Vue {}
 </script>
 
