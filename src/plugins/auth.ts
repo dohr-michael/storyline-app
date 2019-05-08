@@ -11,14 +11,14 @@ const webAuth = new WebAuth({
 function writeToStorage(key: string, value: string | null) {
     const storageKey = `auth.${key}`;
     if (!value) {
-        sessionStorage.removeItem(storageKey);
+        localStorage.removeItem(storageKey);
     } else {
-        sessionStorage.setItem(storageKey, value);
+        localStorage.setItem(storageKey, value);
     }
 }
 
 function readFromStorage(key: string): string | null {
-    return sessionStorage.getItem(`auth.${key}`);
+    return localStorage.getItem(`auth.${key}`);
 }
 
 export interface UserProfile {
@@ -66,7 +66,7 @@ export class Auth extends Vue {
     get expiredAt(): number {
         if (this._expiredAt === 0 || this._expiredAt === undefined) {
             const v = readFromStorage('expired_at');
-            this._expiredAt = v ? parseInt(v) : 0;
+            this._expiredAt = v ? parseInt(v, 10) : 0;
         }
         return this._expiredAt || 0;
     }
@@ -104,13 +104,13 @@ export class Auth extends Vue {
     }
 
 
-    login(expectedRoute: Route) {
+    public login(expectedRoute: Route) {
         webAuth.authorize({
             state: btoa(JSON.stringify(expectedRoute)),
         });
     }
 
-    logout(): Promise<any> {
+    public logout(): Promise<any> {
         return new Promise((resolve, reject) => {
             this.token = null;
             this.accessToken = null;
@@ -124,11 +124,11 @@ export class Auth extends Vue {
         });
     }
 
-    isAuthenticated(): boolean {
+    public isAuthenticated(): boolean {
         return new Date().getTime() < this.expiredAt;
     }
 
-    handleAuthentication(): Promise<any> {
+    public handleAuthentication(): Promise<any> {
         return new Promise((resolve, reject) => {
             webAuth.parseHash((err, authResult) => {
                 if (authResult && authResult.idToken) {
@@ -150,9 +150,9 @@ export class Auth extends Vue {
 }
 
 const plugin = {
-    install: function (cVue: typeof Vue, options?: any) {
+    install(cVue: typeof Vue, options?: any) {
         cVue.prototype.$auth = new Auth();
-    }
+    },
 };
 
 Vue.use(plugin);

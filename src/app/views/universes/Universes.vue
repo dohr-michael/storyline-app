@@ -15,11 +15,11 @@
 </template>
 
 <script lang="ts">
-    import Vue                 from 'vue';
-    import { Component, Prop } from 'vue-property-decorator';
-    import { UniversesPaged }  from '@/app/domain/universe';
-    import PagedView           from '@/app/components/PagedView.vue';
-    import UniverseCard        from '@/app/components/universes/UniverseCard.vue';
+    import Vue                                                  from 'vue';
+    import { Component, Prop }                                  from 'vue-property-decorator';
+    import { Universes as UniversesQuery, Universes_universes } from '@/app/graphql';
+    import PagedView                                            from '@/app/components/PagedView.vue';
+    import UniverseCard                                         from '@/app/components/universes/UniverseCard.vue';
 
     const Step = 6;
 
@@ -48,7 +48,7 @@
             },
         }
     })
-    export default class Universes extends Vue {
+    export default class Universes extends Vue implements UniversesQuery {
         @Prop({required: true, type: String})
         queryString!: string;
         @Prop({required: true, type: Number})
@@ -59,9 +59,9 @@
         newRouteName?: string;
         @Prop({type: String})
         detailsRouteName?: string;
+        universes: Universes_universes | null = null;
 
         loading: number = 0;
-        universes?: UniversesPaged;
 
         get renderer() { return UniverseCard; }
 

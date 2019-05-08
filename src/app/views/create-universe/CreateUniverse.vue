@@ -55,21 +55,25 @@
 <script lang="ts">
     import Vue                 from 'vue';
     import { Component, Prop } from 'vue-property-decorator';
-    import { CreateCommand }   from '@/app/domain/universe';
+    import {
+        CreateUniverse as CreateUniverseQuery,
+        CreateUniverseVariables,
+        UniverseTags
+    }                          from '@/app/graphql';
 
     @Component<CreateUniverse>({
         name: 'CreateUniverse',
         apollo: {
             universeTags: {
-                query: require('@/app/graphql/universe-tags.gql')
+                query: require('@/app/graphql/universe-tags.gql'),
             }
         }
     })
-    export default class CreateUniverse extends Vue {
+    export default class CreateUniverse extends Vue implements UniverseTags {
         @Prop({required: true, type: String})
         listRouteName!: string;
         universeTags: string[] = [];
-        payload: Partial<CreateCommand> = {
+        payload: Partial<CreateUniverseVariables> = {
             tags: []
         };
         search: string | null = null;
@@ -93,9 +97,14 @@
 
 
         onSave() {
-            this.$apollo.mutate({
+            this.$apollo.mutate<CreateUniverseQuery>({
                 mutation: require('@/app/graphql/create-universe.gql'),
                 variables: this.payload,
+                update: (proxy, res) => {
+                    if (res.data) {
+                        console.log(res.data.createUniverse);
+                    }
+                }
             }).then(_ => this.$router.go(-1)).catch(error => console.log(error));
         }
     }

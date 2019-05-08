@@ -3,7 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "graphql:update": "graphql get-schema",
+    "graphql:generate": "apollo codegen:generate --target=typescript --localSchemaFile=./schema.graphql",
+    "tslint": "tslint --project .",
     "serve": "vue-cli-service serve",
+    "prebuild": "npm run graphql:generate",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "dist": "npm run build && node scripts/post-build.js"
@@ -36,6 +40,8 @@
     "@vue/cli-plugin-pwa": "^3.6.0",
     "@vue/cli-plugin-typescript": "^3.6.0",
     "@vue/cli-service": "^3.6.0",
+    "apollo": "^2.10.0",
+    "graphql-cli": "^3.0.11",
     "node-sass": "^4.9.0",
     "sass-loader": "^7.1.0",
     "stylus": "^0.54.5",

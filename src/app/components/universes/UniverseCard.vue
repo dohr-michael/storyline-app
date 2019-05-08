@@ -20,7 +20,7 @@
 <script lang="ts">
     import Vue                 from 'vue';
     import { Component, Prop } from 'vue-property-decorator';
-    import { Universe }        from '@/app/domain/universe';
+    import { universe }        from '@/app/graphql';
 
     @Component<UniverseCard>({
         name: 'UniverseCard',
@@ -30,7 +30,7 @@
         components: {}
     })
     export default class UniverseCard extends Vue {
-        item!: Universe;
+        item!: universe;
     }
 </script>
 

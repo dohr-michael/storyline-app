@@ -1,0 +1,80 @@
+# source: http://localhost:8080
+# timestamp: Tue May 07 2019 20:29:35 GMT+0200 (Central European Summer Time)
+
+input CreateUniverseInput {
+  name: String!
+  description: String!
+  picture: String
+  tags: [String!]
+}
+
+"""
+The `DateTime` scalar type represents a DateTime. The DateTime is serialized as an RFC 3339 quoted string
+"""
+scalar DateTime
+
+type Mutation {
+  createUniverse(
+    """Name of the universe"""
+    input: CreateUniverseInput!
+  ): Universe!
+}
+
+type Query {
+  universe(id: String!): Universe
+  universeTags: [String!]!
+  universes(query: String, limit: Int, offset: Int): UniversesPaged
+  user(email: String!): User
+  users(offset: Int, query: String, limit: Int): UsersPaged
+}
+
+type Universe {
+  """Creation date"""
+  createdAt: DateTime!
+
+  """Description of the universe"""
+  description: String!
+
+  """Id of the universe"""
+  id: String!
+
+  """Name of the universe"""
+  name: String!
+
+  """Owner"""
+  owner: User!
+
+  """Picture of the universe, can be url of base64 image"""
+  picture: String
+
+  """Tags of the universe"""
+  tags: [String!]!
+}
+
+type UniversesPaged {
+  items: [Universe!]!
+  limit: Int!
+  offset: Int!
+  total: Int!
+}
+
+type User {
+  """Creation date"""
+  createdAt: DateTime!
+
+  """Email of the user"""
+  email: String!
+
+  """Name of the user"""
+  name: String!
+
+  """Picture of the user, can be url of base64 image"""
+  picture: String
+}
+
+type UsersPaged {
+  items: [User!]!
+  limit: Int!
+  offset: Int!
+  total: Int!
+}

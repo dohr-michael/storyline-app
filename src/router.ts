@@ -20,7 +20,7 @@ const router: Router = new Router({
             component: Login,
             meta: {
                 skipAuth: true,
-            }
+            },
         },
         {
             path: '/',
@@ -53,9 +53,9 @@ const router: Router = new Router({
                             component: createUniverse.Modal,
                             props: {
                                 listRouteName: 'universes',
-                            }
-                        }
-                    ]
+                            },
+                        },
+                    ],
                 },
             ],
         },

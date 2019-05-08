@@ -9,5 +9,5 @@ export default {
         clientID: global.AUTH0_CLIENT_ID || '',
         responseType: 'token id_token',
         scope: 'openid profile email',
-    }
+    },
 };

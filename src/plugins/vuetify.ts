@@ -8,6 +8,6 @@ Vue.use(Vuetify, {
     iconfont: 'mdi',
     lang: {
         locales: {fr},
-        current: 'fr'
+        current: 'fr',
     },
 });
