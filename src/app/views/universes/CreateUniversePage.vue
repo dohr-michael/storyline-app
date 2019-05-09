@@ -56,20 +56,20 @@
     import Vue                 from 'vue';
     import { Component, Prop } from 'vue-property-decorator';
     import {
-        CreateUniverse as CreateUniverseQuery,
+        CreateUniverse,
         CreateUniverseVariables,
         UniverseTags
     }                          from '@/app/graphql';
 
-    @Component<CreateUniverse>({
-        name: 'CreateUniverse',
+    @Component<CreateUniversePage>({
+        name: 'CreateUniversePage',
         apollo: {
             universeTags: {
                 query: require('@/app/graphql/universe-tags.gql'),
             }
         }
     })
-    export default class CreateUniverse extends Vue implements UniverseTags {
+    export default class CreateUniversePage extends Vue implements UniverseTags {
         @Prop({required: true, type: String})
         listRouteName!: string;
         universeTags: string[] = [];
@@ -97,7 +97,7 @@
 
 
         onSave() {
-            this.$apollo.mutate<CreateUniverseQuery>({
+            this.$apollo.mutate<CreateUniverse>({
                 mutation: require('@/app/graphql/create-universe.gql'),
                 variables: this.payload,
                 update: (proxy, res) => {

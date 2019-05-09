@@ -1,5 +1,5 @@
 # source: http://localhost:8080
-# timestamp: Tue May 07 2019 20:29:35 GMT+0200 (Central European Summer Time)
+# timestamp: Thu May 09 2019 10:46:24 GMT+0200 (Central European Summer Time)
 
 input CreateUniverseInput {
   name: String!
@@ -23,9 +23,7 @@ type Mutation {
 type Query {
   universe(id: String!): Universe
   universeTags: [String!]!
-  universes(query: String, limit: Int, offset: Int): UniversesPaged
-  user(email: String!): User
-  users(offset: Int, query: String, limit: Int): UsersPaged
+  universes(limit: Int, offset: Int, query: String): UniversesPaged
 }
 
 type Universe {
@@ -70,11 +68,4 @@ type User {
 
   """Picture of the user, can be url of base64 image"""
   picture: String
-}
-
-type UsersPaged {
-  items: [User!]!
-  limit: Int!
-  offset: Int!
-  total: Int!
 }

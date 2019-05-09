@@ -39,7 +39,7 @@
     })
     export default class Main extends Vue {
         drawer = {
-            model: null
+            model: false
         };
     }
 </script>

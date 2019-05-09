@@ -1,11 +1,10 @@
-import Vue                 from 'vue';
-import Router, { Route }   from 'vue-router';
-import Login               from '@/app/views/Login.vue';
-import Main                from '@/app/views/Main.vue';
-import * as home           from '@/app/views/home';
-import * as universes      from '@/app/views/universes';
-import * as createUniverse from '@/app/views/create-universe';
-import * as utils          from '@/utils';
+import Vue               from 'vue';
+import Router, { Route } from 'vue-router';
+import Login             from '@/app/views/Login.vue';
+import Main              from '@/app/views/Main.vue';
+import * as home         from '@/app/views/home';
+import * as universes    from '@/app/views/universes';
+import * as utils        from '@/utils';
 
 Vue.use(Router);
 
@@ -36,7 +35,10 @@ const router: Router = new Router({
                 {
                     path: 'universes',
                     name: 'universes',
-                    components: universes,
+                    components: {
+                        Main: () => import(/* webpackChunkName: "universes" */ '@/app/views/universes/Universes.vue'),
+                        Toolbar: () => import(/* webpackChunkName: "universes" */ '@/app/views/universes/UniversesToolbar.vue'),
+                    },
                     props: {
                         Main: utils.router
                             .pagedRoute()
@@ -50,7 +52,7 @@ const router: Router = new Router({
                         {
                             path: 'new',
                             name: 'new-universe',
-                            component: createUniverse.Modal,
+                            component: () => import(/* webpackChunkName: "create-universe" */ '@/app/views/universes/CreateUniversePage.vue'),
                             props: {
                                 listRouteName: 'universes',
                             },
