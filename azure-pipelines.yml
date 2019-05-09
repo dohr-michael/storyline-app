@@ -1,0 +1,27 @@
+# Node.js with Vue
+# Build a Node.js project that uses Vue.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '10.x'
+  displayName: 'Install Node.js'
+
+- script: |
+    npm ci
+    npm run dist
+    docker build -t '$(registry-id)/storyline/app:$(Build.BuildNumber)' .
+    docker tag '$(registry-id)/storyline/app:$(Build.BuildNumber)' '$(registry-id)/storyline/app:latest'
+    docker login -u '$(vps-user)' -p '$(vps-password)' '$(registry-id)'
+    docker push '$(registry-id)/storyline/app'
+  displayName: 'npm install and build'
+
+
