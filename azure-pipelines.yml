@@ -21,9 +21,9 @@ steps:
   displayName: 'npm install and build'
 
 - script: |
+    docker login -u '$(vps-user)' -p '$(vps-password)' '$(registry-id)'
     docker build -t '$(registry-id)/storyline/app:$(Build.BuildNumber)' .
     docker tag '$(registry-id)/storyline/app:$(Build.BuildNumber)' '$(registry-id)/storyline/app:latest'
-    docker login -u '$(vps-user)' -p '$(vps-password)' '$(registry-id)'
     docker push '$(registry-id)/storyline/app'
   displayName: 'generate container'
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
